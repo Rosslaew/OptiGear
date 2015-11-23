@@ -1,14 +1,10 @@
-"""Table of attribute weights
-"""
-__weights__ = {
-
-}
+import ffxiv
 
 """Function to get the weight of the attributes
 of a certain job.
 """
 def weights(job):
-    return __weights__[job]
+    return ffxiv.weights[job]
 
 """Function to calculate the power of a gear for job.
 """
