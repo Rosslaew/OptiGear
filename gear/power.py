@@ -13,5 +13,7 @@ def weights(job):
 """Function to calculate the power of a gear for job.
 """
 def power(gear, job):
-    pass
+    return sum([getattr(a,k)*v
+        for k,v in weights(job).items()])
+
 
