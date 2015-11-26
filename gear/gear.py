@@ -1,5 +1,5 @@
 from collections import UserList
-import ffxiv
+import ffxiv, xivdb
 import power as p
 
 """Class representing a simple gear element.
@@ -14,12 +14,21 @@ class Gear(object):
     attributes : the attributes of the gear as defined in ffxiv.attributes.
     """
     def __init__(self, slot, item_id = None, **attributes):
-        if item_id is None :
-            self.slot = slot
-            for att in ffxiv.attributes:
-                self.__setattr__(att,attributes[att])
-        else:
-            pass #TODO add fetching gear from xivdb
+        if item_id is not None :
+            attributes = xivdb.getId(item_id)
+
+        assert(slot in ffxiv.slots)
+        self.slot = slot
+
+        # We filter out what is not a legitimate FFXIV attribute
+        self.attributes = dict(filter(
+                lambda a:a[0] in ffxiv.attributes, 
+                attributes.items())) 
+
+        # We put the rest in self.misc
+        self.misc = dict(filter(
+                lambda a:a[0] not in ffxiv.attributes, 
+                attributes.items())) 
 
 """Class representing a complete gear set.
     Can be called by specifying the Lodestone ID for
@@ -49,7 +58,7 @@ class GearSet(Gear):
 
         # A GearSet is treated as a Gear, so we update the attributes
         attributes = { k : sum(
-            [getattr(g,k,default=0) 
+            [g.attributes.get(k,0) 
                 for g in self.gears.values() if g is not None
             ], start=0)
             for k in ffxiv.attributes}

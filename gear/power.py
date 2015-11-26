@@ -1,15 +1,9 @@
 import ffxiv
 
-"""Function to get the weight of the attributes
-of a certain job.
-"""
-def weights(job):
-    return ffxiv.weights[job]
-
 """Function to calculate the power of a gear for job.
 """
 def power(gear, job):
-    return sum([getattr(a,k)*v
-        for k,v in weights(job).items()])
+    return sum([int(gear.attributes.get(k,0))*v
+        for k,v in ffxiv.weights[job].items()])
 
 
