@@ -1,6 +1,6 @@
 from collections import UserList
-import ffxiv, xivdb
-import power as p
+from gear import ffxiv, xivdb
+from gear import power as p
 
 """Class representing a simple gear element.
 """
@@ -79,3 +79,11 @@ class GearSetList(UserList):
     """
     def maxPower(self,job, constraintList=None):
         pass
+
+"""Function to calculate the power of a gear for job.
+"""
+def power(gear, job):
+    return sum([int(gear.attributes.get(k,0))*v
+        for k,v in ffxiv.weights[job].items()])
+
+

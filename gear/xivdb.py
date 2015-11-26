@@ -1,6 +1,6 @@
 from urllib import request
 import json
-import ffxiv
+from gear import ffxiv
 
 """Function that puts all the attributes on the same level instead of differentiating
 base attributes and parametric attributes.
