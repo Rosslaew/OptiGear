@@ -1,6 +1,6 @@
 from collections import UserList
-from gear import ffxiv, xivdb
-from gear import power as p
+from gear import ffxiv
+from gear.api import xivdb
 
 """Class representing a simple gear element.
 """
